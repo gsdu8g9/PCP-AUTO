@@ -15,14 +15,16 @@ class DataProvider:
     def get_post_text(self):
         query = 'SELECT post_id, post_text FROM posts WHERE is_posted = 0 LIMIT 1'
         post = self._db.execute(query).fetchall()
-        #Помечаем пост как использованый
-        query = 'UPDATE posts SET is_posted = TRUE WHERE post_id = {}'.format(post[0][0])
+
+        # Помечаем пост как использованый
+        query = 'UPDATE posts SET is_posted = 1 WHERE post_id = {}'.format(post[0][0])
+        self._db.execute(query)
         self._db.commit()
         post_text = post[0][1].replace('""', '"')
         return post_text
 
     def add_new_text(self, text):
-        query = 'INSERT OR IGNORE INTO posts VALUES (NULL, {}, NULL)'.format(text)
+        query = 'INSERT OR IGNORE INTO posts VALUES (NULL, "{}", 0)'.format(text)
         self._db.execute(query)
         self._db.commit()
 

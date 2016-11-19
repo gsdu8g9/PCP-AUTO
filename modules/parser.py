@@ -42,7 +42,7 @@ def parse():
             # Экранируем кавычки для sqlite
             html_format = html_format.replace('"', '""').replace("'", "''")
 
-            html_format = html_format.replace('анекдотов.net', '')
+            html_format = html_format.replace('anekdotov.net', '')
 
             # Убираем лишние html-теги
             joke_text = re.sub(r'\<[^>]*\>', '', html_format)
