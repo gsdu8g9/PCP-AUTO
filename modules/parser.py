@@ -47,7 +47,7 @@ def parse():
             # Убираем лишние html-теги
             joke_text = re.sub(r'\<[^>]*\>', '', html_format)
 
-            if len(joke_text) >= 550:
+            if len(joke_text) <= 550:
                 db.add_new_text(joke_text)
 
     db.close_conn()
