@@ -9,7 +9,7 @@ def main():
         parser.parse()
 
     text = db.get_post_text()
-    image_creator.create(text)
+    image_path = image_creator.create(text)
 
     db.close_conn()
 

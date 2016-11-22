@@ -68,3 +68,4 @@ def create(text):
 
     image_path = os.path.join(base_path, '../img/post.png')
     img.save(image_path)
+    return image_path

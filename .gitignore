@@ -1,2 +1,4 @@
 .idea/
-.img/*
+img/*
+access_config.py
+*.pyc
