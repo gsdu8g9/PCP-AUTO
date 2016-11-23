@@ -34,7 +34,6 @@ def create(text):
     base_path = os.path.dirname(__file__)
     font_path = os.path.join(base_path, '../assets/Lora-Regular.ttf')
     bg_path = os.path.join(base_path, '../assets/bg.png')
-    head_path = os.path.join(base_path, '../assets/header.png')
 
     text = text.split('\n')
     text_rows = []

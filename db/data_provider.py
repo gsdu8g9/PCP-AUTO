@@ -6,6 +6,7 @@ class DataProvider:
 
     _db = None
     _filename = 'posts.db'
+    post_id = None
 
     def __init__(self):
         base_path = os.path.dirname(__file__)
@@ -15,11 +16,7 @@ class DataProvider:
     def get_post_text(self):
         query = 'SELECT post_id, post_text FROM posts WHERE is_posted = 0 LIMIT 1'
         post = self._db.execute(query).fetchall()
-
-        # Помечаем пост как использованый
-        query = 'UPDATE posts SET is_posted = 1 WHERE post_id = {}'.format(post[0][0])
-        self._db.execute(query)
-        self._db.commit()
+        self.post_id = post[0][0]
         post_text = post[0][1].replace('""', '"')
         return post_text
 
@@ -35,6 +32,12 @@ class DataProvider:
             return False
         else:
             return True
+
+    def mark_posted(self):
+        # Помечаем пост как использованый
+        query = 'UPDATE posts SET is_posted = 1 WHERE post_id = {}'.format(self.post_id)
+        self._db.execute(query)
+        self._db.commit()
 
     def close_conn(self):
         self._db.close()

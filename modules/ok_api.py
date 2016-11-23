@@ -4,6 +4,7 @@ import hashlib
 import json
 import urllib
 
+
 def api_request(method, params={}):
     api_server = 'https://api.ok.ru/fb.do?'
 
@@ -14,7 +15,6 @@ def api_request(method, params={}):
     sig_keys = sorted(sig_keys)
 
     sig_string = 'application_key={}'.format(conf.PUBLIC_KEY)
-    request_string = ''
 
     for key in sig_keys:
         if key == 'method':
@@ -41,8 +41,8 @@ def post(img_path='../img/post.png'):
     response_json = api_request('photosV2.getUploadUrl', {'gid': '53233370661082'})
     upload_url = json.loads(response_json)['upload_url']
     photo_id = json.loads(response_json)['photo_ids'][0]
-    uplaod_res = json.loads(requests.post(upload_url, files={'post.png': open(img_path, 'rb')}).text)
-    photo_token = uplaod_res['photos'][photo_id]['token']
+    upload_res = json.loads(requests.post(upload_url, files={'post.png': open(img_path, 'rb')}).text)
+    photo_token = upload_res['photos'][photo_id]['token']
     attachment = {
         'media': [
             {
@@ -59,8 +59,6 @@ def post(img_path='../img/post.png'):
         'attachment': json.dumps(attachment)
     }
     result = api_request('mediatopic.post', params)
-    return "error_code" not in json.loads(result).keys()
+    return isinstance(json.dumps(result), str)
 
-if __name__ == '__main__':
-    post()
 
