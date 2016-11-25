@@ -38,7 +38,9 @@ def api_request(method, params={}):
 
 
 def post(img_path='../img/post.png'):
-    response_json = api_request('photosV2.getUploadUrl', {'gid': '53233370661082'})
+    group_id = '53247110021338'
+
+    response_json = api_request('photosV2.getUploadUrl', {'gid': group_id})
     upload_url = json.loads(response_json)['upload_url']
     photo_id = json.loads(response_json)['photo_ids'][0]
     upload_res = json.loads(requests.post(upload_url, files={'post.png': open(img_path, 'rb')}).text)
@@ -54,7 +56,7 @@ def post(img_path='../img/post.png'):
         ]
     }
     params = {
-        'gid': '53233370661082',
+        'gid': group_id,
         'type': 'GROUP_THEME',
         'attachment': json.dumps(attachment)
     }
